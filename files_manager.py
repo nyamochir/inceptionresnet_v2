@@ -14,7 +14,7 @@ import shutil
 #os.listdir()
 home_dir = "data/"
 def extract_zipfile():
-    zfile = zipfile.ZipFile(home_dir+"k28dtm7tr6-1.zip")
+    zfile = zipfile.ZipFile("k28dtm7tr6-1.zip")
     zfile.extractall(home_dir)
 extract_zipfile()
 
