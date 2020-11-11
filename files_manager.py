@@ -12,15 +12,10 @@ import shutil
 
 #os.chdir("data/") # this notebook is related to the data directory since it is only going manipulate the data --> 
 #os.listdir()
+home_dir = "data/"
 def extract_zipfile():
-    zfile = zipfile.ZipFile("k28dtm7tr6-1.zip")
-    zfile.extractall()
-extract_zipfile()
-
-
-def extract_zipfile():
-    zfile = zipfile.ZipFile("k28dtm7tr6-1.zip")
-    zfile.extractall()
+    zfile = zipfile.ZipFile(home_dir+"k28dtm7tr6-1.zip")
+    zfile.extractall(home_dir)
 extract_zipfile()
 
 def get_tar_files(names):
@@ -29,14 +24,14 @@ def get_tar_files(names):
         if ".tar" in name:
             tar_files.append(name)
     return tar_files
-names = os.listdir()
+names = os.listdir(home_dir)
 tar_files = get_tar_files(names)
 #tar_files
 def extract_tarfiles(tar_files):
     print("Starting to extract ...")
     for current_tarfile in tar_files:
-        ctar = tarfile.TarFile(current_tarfile)
-        ctar.extractall()
+        ctar = tarfile.TarFile(home_dir+current_tarfile)
+        ctar.extractall(home_dir)
     print("Done to extract!")
     
 extract_tarfiles(tar_files)
@@ -55,12 +50,12 @@ def build_classdir():
             classes.append(name_init1+str(i))
             
     try:
-        os.mkdir("kard_data")
+        os.mkdir(home_dir+"kard_data")
     except:
         pass
     for current_class in classes:
         try:
-            os.mkdir("kard_data/"+current_class)
+            os.mkdir(home_dir+"kard_data/"+current_class)
         except:
             pass
     print("successfully created!")
@@ -69,7 +64,7 @@ build_classdir()
 
 def get_video_files(extension):
     mp4_files=  []
-    for i in os.listdir():
+    for i in os.listdir(home_dir):
         #print(i)
 
         if extension in i:
@@ -80,7 +75,7 @@ def copy_files(mp4_files):
     print("Starting to copy video files ...")
     for file in mp4_files:
         class_name = file[:3]
-        shutil.copy(file, "kard_data/"+class_name)
+        shutil.copy(home_dir+file, home_dir+"kard_data/"+class_name)
     print("Done!")
 extension = ".mp4"
 mp4_files =  get_video_files(extension)
@@ -89,20 +84,20 @@ copy_files(mp4_files)#
 def file_system_clean():
     print("Starting to clean the file system ...")
 
-    for i in os.listdir():
+    for i in os.listdir(home_dir):
 
         if i in tar_files or i == "kard_data" or i == "k28dtm7tr6-1.zip":
             pass
         else:
             try:
-                os.remove(i)
+                os.remove(home_dir+i)
             except:
-                shutil.rmtree(i)
+                shutil.rmtree(home_dir+i)
     print("Successful file System cleaning")
 def prepare_train_test():
     
-    shutil.copytree("kard_data/", "training/")
-    shutil.copytree("kard_data/", "test/")
+    shutil.copytree(home_dir+"kard_data/", home_dir+"training/")
+    shutil.copytree(home_dir+"kard_data/", home_dir+"test/")
     #for i in os.listdir("kard_data"):
     #    shutil.copytree("kard_data/", "training/")
     #for i in os.listdir("kard_data"):
