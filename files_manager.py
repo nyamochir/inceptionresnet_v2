@@ -86,7 +86,7 @@ def file_system_clean():
 
     for i in os.listdir(home_dir):
 
-        if i in tar_files or i == "kard_data" or i == "k28dtm7tr6-1.zip":
+        if i == "kard_data":
             pass
         else:
             try:
@@ -105,8 +105,8 @@ def prepare_train_test():
 file_system_clean()    
 
 extension = ".mp4"# this would be different depending on the particular input itis giving it as training or the testing data
-mp4_files= get_video_files(extension)
-classes = build_classdir()
 
+classes = build_classdir()
+os.remove("k28dtm7tr6-1.zip")
 prepare_train_test()
 
