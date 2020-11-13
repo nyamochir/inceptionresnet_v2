@@ -6,7 +6,7 @@ from tensorflow.keras.layers import LSTM
 from keras.layers import Dense, TimeDistributed
 from keras.layers import Dropout, GlobalAveragePooling2D
 from tensorflow.python.keras import optimizers
-from keras.applications import MobileNetV2, InceptionResNetV2, InceptionV3
+from keras.applications import MobileNetV2, InceptionResNetV2, InceptionV3, ResNet50
 from keras import backend as K
 
 from keras.models import Model
@@ -24,7 +24,7 @@ def create_model_pretrain(dim, n_sequence, n_channels, n_output):
     print((n_sequence, *dim, n_channels))
     model.add( 
         TimeDistributed(
-            InceptionV3(weights='imagenet',include_top=False), 
+            InceptionResNetV2(weights='imagenet',include_top=False), 
             input_shape=(n_sequence, *dim, n_channels)
         )
     )

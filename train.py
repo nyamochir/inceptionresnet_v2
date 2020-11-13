@@ -4,14 +4,14 @@ from data_gen import DataGenerator
 from model_ML import create_model_pretrain
 from data_helper import readfile_to_dict
 
-from tensorflow.compat.v1.keras.callbacks import Callback
-from tensorflow.compat.v1.keras.callbacks import ModelCheckpoint
+from tensorflow.keras.callbacks import Callback
+from tensorflow.keras.callbacks import ModelCheckpoint
 
 ###### Parameters setting
 dim = (224,224) # for MobileNetV2
 n_sequence = 8 # for LSTM
 n_channels = 3 # color channel(RGB)
-n_output = 6 #18 # number of output class
+n_output = 18 #18 # number of output class
 batch_size = 2
 n_mul_train = 1 # To increase sample of train set
 n_mul_test = 2 # To increase sample of test set
@@ -60,24 +60,24 @@ model = create_model_pretrain(dim, n_sequence, n_channels, n_output)
 start_epoch = 0
 
 # Load weight of unfinish training model(optional)
-load_model = False
+load_model = True
 if load_model:
-    weights_path = 'save_weight/weight-06-0.21-0.31.hdf5' # name of model 
-    start_epoch = 300
+    weights_path = 'save_weight/weight-26-0.31-0.67.hdf5' # name of model 
+    start_epoch = 26# currently it should be set at the 0 since there is learned parameter
     model.load_weights(weights_path)
 
 # Set callback
 validate_freq = 3
 filepath = "save_weight/"+"weight-{epoch:02d}-{accuracy:.2f}-{val_accuracy:.2f}.hdf5"
-checkpoint = ModelCheckpoint(filepath, monitor='val_accuracy', verbose=1, save_best_only=False, period=validate_freq)
+checkpoint = ModelCheckpoint(filepath, monitor='val_acc', verbose=1, save_best_only=False, validation_freq=validate_freq, save_freq = "epoch", period = 10)
 callbacks_list = [checkpoint]
 
 # # Train model on dataset
-model.fit_generator(generator=training_generator,
+history = model.fit_generator(generator=training_generator,
                     validation_data=validation_generator,
                     epochs=600,
                     callbacks=callbacks_list,
                     initial_epoch=start_epoch,                 
-                    validation_freq=validate_freq
+                    validation_steps=validate_freq
                     )
 

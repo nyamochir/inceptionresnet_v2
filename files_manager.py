@@ -13,6 +13,10 @@ import shutil
 #os.chdir("data/") # this notebook is related to the data directory since it is only going manipulate the data --> 
 #os.listdir()
 home_dir = "data/"
+try:
+    os.mkdir("data")
+except:
+    pass
 def extract_zipfile():
     zfile = zipfile.ZipFile("k28dtm7tr6-1.zip")
     zfile.extractall(home_dir)
@@ -107,6 +111,6 @@ file_system_clean()
 extension = ".mp4"# this would be different depending on the particular input itis giving it as training or the testing data
 
 classes = build_classdir()
-os.remove("k28dtm7tr6-1.zip")
+#os.remove("k28dtm7tr6-1.zip")
 prepare_train_test()
 
