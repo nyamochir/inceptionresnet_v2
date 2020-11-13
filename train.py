@@ -60,7 +60,7 @@ model = create_model_pretrain(dim, n_sequence, n_channels, n_output)
 start_epoch = 0
 
 # Load weight of unfinish training model(optional)
-load_model = True
+load_model = False
 if load_model:
     weights_path = 'save_weight/weight-26-0.31-0.67.hdf5' # name of model 
     start_epoch = 26# currently it should be set at the 0 since there is learned parameter
